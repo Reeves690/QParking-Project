@@ -9,9 +9,9 @@
  * and customer CSV to initialise the entire QParking system.
  */
 
-// -----------------------------------------------------------------
-// Helper: split a CSV line into tokens
-// -----------------------------------------------------------------
+
+
+
 static std::vector<std::string> splitCSV(const std::string& line) {
     std::vector<std::string> tokens;
     std::stringstream ss(line);
@@ -28,13 +28,13 @@ static std::vector<std::string> splitCSV(const std::string& line) {
     return tokens;
 }
 
-// -----------------------------------------------------------------
+
 // readConfig
-// File format (text):
+// File formt
 //   Line 1: <m> <n>
 //   Line 2: <garage CSV filename>
 //   Line 3: <customer CSV filename>
-// -----------------------------------------------------------------
+
 bool readConfig(const std::string& filename, SystemConfig& config) {
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -79,13 +79,13 @@ bool readConfig(const std::string& filename, SystemConfig& config) {
     return true;
 }
 
-// -----------------------------------------------------------------
+
 // loadGarages
 // Garage CSV format:
 //   Each column = one garage (m columns)
 //   Each row    = one level (n rows, row 0 = bottom of stack)
 //   Cell values: -1 (available), -2/R (restricted), or customerID
-// -----------------------------------------------------------------
+
 bool loadGarages(const SystemConfig& config, std::vector<Garage>& garages) {
     std::ifstream file(config.garageFile);
     if (!file.is_open()) {
@@ -135,11 +135,10 @@ bool loadGarages(const SystemConfig& config, std::vector<Garage>& garages) {
     return true;
 }
 
-// -----------------------------------------------------------------
+
 // loadCustomers
 // Customer CSV format (one customer per row):
-//   customerID, name, phone, arrivalTime, departureTime
-// -----------------------------------------------------------------
+
 bool loadCustomers(const SystemConfig& config, std::vector<Customer>& customers) {
     std::ifstream file(config.customerFile);
     if (!file.is_open()) {
@@ -171,10 +170,8 @@ bool loadCustomers(const SystemConfig& config, std::vector<Customer>& customers)
     return true;
 }
 
-// -----------------------------------------------------------------
 // printAllGarages
 // Prints each garage's state to stdout.
-// -----------------------------------------------------------------
 void printAllGarages(const std::vector<Garage>& garages) {
     std::cout << "=== Garage States ===\n";
     for (int i = 0; i < (int)garages.size(); i++) {
@@ -183,10 +180,8 @@ void printAllGarages(const std::vector<Garage>& garages) {
     std::cout << "=====================\n";
 }
 
-// -----------------------------------------------------------------
 // writeGarageState
 // Writes each garage's current state to an output file stream.
-// -----------------------------------------------------------------
 void writeGarageState(const std::vector<Garage>& garages, std::ofstream& out) {
     out << "=== Garage States ===\n";
     for (int g = 0; g < (int)garages.size(); g++) {
