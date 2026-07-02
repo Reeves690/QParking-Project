@@ -15,11 +15,10 @@
  * after the target vehicle is removed.
  */
 
-// -----------------------------------------------------------------
+
 // Helper: find the index of a garage that has room for one more car
 // and is NOT the excluded garage.
 // Returns -1 if none found.
-// -----------------------------------------------------------------
 static int findFreeGarage(const std::vector<Garage>& garages, int excludeIdx) {
     for (int i = 0; i < (int)garages.size(); i++) {
         if (i == excludeIdx) continue;
@@ -28,9 +27,7 @@ static int findFreeGarage(const std::vector<Garage>& garages, int excludeIdx) {
     return -1;
 }
 
-// -----------------------------------------------------------------
 // retrieveCar
-// -----------------------------------------------------------------
 bool retrieveCar(std::vector<Garage>& garages, int n, int customerID) {
     // Step 1: locate the car
     CarLocation loc = locateCar(garages, customerID);
@@ -46,7 +43,7 @@ bool retrieveCar(std::vector<Garage>& garages, int n, int customerID) {
 
     // Step 2: pop cars above the target into a list tracking (carID, tempGarageIdx).
     // Anything on top of the target car must be moved to a free garage first.
-    // We record exactly where each car was placed so we can remove it cleanly.
+    // Record exactly where each car was placed so we can remove it cleanly.
     std::vector<std::pair<int,int>> displaced; // {carID, tempGarageIdx}
 
     while (garages[srcGarage].peekTop() != customerID) {
@@ -56,7 +53,7 @@ bool retrieveCar(std::vector<Garage>& garages, int n, int customerID) {
             return false;
         }
 
-        // Find a free garage (not the source) to temporarily hold this car
+        // Find a free garage to temporarily hold this car
         int freeIdx = findFreeGarage(garages, srcGarage);
         if (freeIdx == -1) {
             std::cerr << "ERROR: No free garage available for displaced car "
@@ -76,7 +73,7 @@ bool retrieveCar(std::vector<Garage>& garages, int n, int customerID) {
     std::cout << "  Car for customer " << retrieved
               << " retrieved from garage " << srcGarage << ". Goodbye!\n";
 
-    // Step 4: re-park displaced cars. Iterate in reverse order (LIFO) so
+    // Step 4: re-park displaced cars. Iterate in reverse order so
     // we pop each from its temporary garage (where it sits on top) and
     // re-assign it to any available spot.
     for (int i = (int)displaced.size() - 1; i >= 0; i--) {
@@ -86,7 +83,7 @@ bool retrieveCar(std::vector<Garage>& garages, int n, int customerID) {
         // Remove from the top of the temp garage
         int popped = garages[tempGarage].popCar();
         if (popped != carID) {
-            // Fallback: locate and remove directly (shouldn't normally happen)
+            // Fallback: locate and remove directly
             std::cerr << "WARNING: Displaced car " << carID
                       << " was not on top of garage " << tempGarage
                       << " — using locate fallback.\n";
