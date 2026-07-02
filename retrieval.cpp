@@ -8,17 +8,13 @@
 /*
  * retrieval.cpp
  * Component 5 implementation: car retrieval with lot reconfiguration.
- *
+
  * Key constraint: at least n spaces must remain free at all times,
  * which is what makes retrieval possible without exiting the lot.
  * The displaced cars are temporarily held in a queue and re-parked
  * after the target vehicle is removed.
  */
 
-
-// Helper: find the index of a garage that has room for one more car
-// and is NOT the excluded garage.
-// Returns -1 if none found.
 static int findFreeGarage(const std::vector<Garage>& garages, int excludeIdx) {
     for (int i = 0; i < (int)garages.size(); i++) {
         if (i == excludeIdx) continue;
@@ -43,7 +39,7 @@ bool retrieveCar(std::vector<Garage>& garages, int n, int customerID) {
 
     // Step 2: pop cars above the target into a list tracking (carID, tempGarageIdx).
     // Anything on top of the target car must be moved to a free garage first.
-    // Record exactly where each car was placed so we can remove it cleanly.
+    // Record exactly where each car was placed so it can be removed it cleanly.
     std::vector<std::pair<int,int>> displaced; // {carID, tempGarageIdx}
 
     while (garages[srcGarage].peekTop() != customerID) {
@@ -74,7 +70,7 @@ bool retrieveCar(std::vector<Garage>& garages, int n, int customerID) {
               << " retrieved from garage " << srcGarage << ". Goodbye!\n";
 
     // Step 4: re-park displaced cars. Iterate in reverse order so
-    // we pop each from its temporary garage (where it sits on top) and
+    // Pop each from its temporary garage and
     // re-assign it to any available spot.
     for (int i = (int)displaced.size() - 1; i >= 0; i--) {
         int carID      = displaced[i].first;
