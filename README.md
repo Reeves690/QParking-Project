@@ -29,7 +29,7 @@ parking.h/.cpp    – Component 3: parking space assignment
 location.h/.cpp   – Component 4: car location search
 retrieval.h/.cpp  – Component 5: lot reconfiguration & retrieval
 status.h/.cpp     – Component 6: lot status and output logging
-garage.h/.cpp     – Garage data structure (LIFO stack)
+garage.h/.cpp     – Garage data structure
 customer.h        – Customer struct definition
 
 
