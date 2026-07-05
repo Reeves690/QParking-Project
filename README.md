@@ -1,7 +1,6 @@
 # QParking-Project
 QParking 
 CSCE 2110
-Milestone 1 Submission
 
 Reeves Holliday
 
@@ -23,28 +22,29 @@ files and prints the initial garage state to the screen.
 --------------------
 FILES:
 --------------------
-main.cpp        – Entry point (int main)
-config.h/.cpp   – Component 1: reads config, garage, and
-                  customer files and initializes the system
-garage.h/.cpp   – Garage data structure (LIFO stack)
-customer.h      – Customer struct definition
+main.cpp          – Entry point (int main)
+config.h/.cpp     – Component 1: reads config/garage/customer files
+interactions.h/.cpp – Component 2: reads interaction commands
+parking.h/.cpp    – Component 3: parking space assignment
+location.h/.cpp   – Component 4: car location search
+retrieval.h/.cpp  – Component 5: lot reconfiguration & retrieval
+status.h/.cpp     – Component 6: lot status and output logging
+garage.h/.cpp     – Garage data structure (LIFO stack)
+customer.h        – Customer struct definition
 
-Input files:
-  config.txt      – Configuration (m garages, n spaces,
-                    and names of other input files)
-  garage.csv      – Initial garage occupancy layout
-  customers.csv   – Initial customer data
 
 ------------------------------
 HOW TO COMPILE
 ------------------------------
 CSE CELL machines:
 
-  g++ -Wall -std=c++17 -o qparking main.cpp config.cpp garage.cpp
+  g++ -Wall -std=c++17 -o qparking main.cpp config.cpp garage.cpp interactions.cpp 
+      parking.cpp location.cpp retrieval.cpp status.cpp
 
 Visual Studio terminal:
 
-  g++ -o qparking main.cpp config.cpp garage.cpp
+  g++ -o qparking main.cpp config.cpp garage.cpp interactions.cpp 
+      parking.cpp location.cpp retrieval.cpp status.cpp
 
 -----------------------------
 HOW TO RUN:
@@ -60,8 +60,9 @@ Type: config.txt
 INPUT FILE FORMATS
 
 --------------------------
+
 config.txt (text):
-  Line 1: <m> <n>  (number of garages, capacity)
+  Line 1: <m> <n>           (number of garages and capacity)
   Line 2: <garage CSV file>
   Line 3: <customer CSV file>
 
@@ -74,6 +75,9 @@ garage.csv:
 customers.csv:
   id, name, phone, arrivalTime, departureTime
 
+interactions.txt:
+  P: <customerID>                     (pickup request)
+  D: <name>,<phone>,<arrivalTime>     (drop-off request)
 ----------------------------------------
 EXPECTED OUTPUT
 ----------------------------------------
